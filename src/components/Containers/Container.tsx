@@ -2,19 +2,17 @@ import {Dispatch} from 'react'
 import {connect} from 'react-redux'
 import {Counter} from "../Counter/Counter"
 import {
-  CounterReducerActionsTypes,
   changeMaxValueAC,
   changeMinMaxCounterValuesAC,
   changeMinValueAC,
+  CounterReducerActionsTypes,
   increaseCounterAC,
   resetCounterAC
 } from "../../redux/actions";
 import {IGlobalState} from "../../redux/state";
-import {saveStateMinMaxValuesToLocalStorage} from "../../localStorage/localStorage";
 
 const mapStateToProps = (state: IGlobalState) => {
 
-  debugger
   return {
     messageText: state.counter.messageText,
     counterCurrentValue: state.counter.counterCurrentValue,
@@ -43,9 +41,6 @@ const mapDispatchToProps = (dispatch: Dispatch<CounterReducerActionsTypes>) => {
     },
     setMinMaxCounterValuesFn() {
       dispatch(changeMinMaxCounterValuesAC())
-
-      // FIXME Где лучше ее использовать с архитектурной точки зрения?
-      saveStateMinMaxValuesToLocalStorage()
     },
     incCounterFn() {
       dispatch(increaseCounterAC())

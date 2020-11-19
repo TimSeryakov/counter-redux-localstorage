@@ -16,7 +16,7 @@ export function CounterDisplay(props: CounterDisplayPropsType) {
                           ${ props.messageText ? 'text-xl' : 'text-6xl' }
                           ${ props.messageText === MESSAGES.ENTER_VALUES && 'animate-pulse-slow'}
                           ${ props.messageText === MESSAGES.INCORRECT_VALUE && ' animate-bounce'}
-                             `}
+                         `}
           >
             {props.messageText ? props.messageText : props.value}
           </h1>
