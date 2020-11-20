@@ -10,6 +10,8 @@ import {
   resetCounterAC
 } from "../../redux/actions";
 import {IGlobalState} from "../../redux/state";
+import {saveStateMinMaxValuesToLocalStorage} from "../../localStorage/localStorage";
+
 
 const mapStateToProps = (state: IGlobalState) => {
 
@@ -40,6 +42,7 @@ const mapDispatchToProps = (dispatch: Dispatch<CounterReducerActionsTypes>) => {
       dispatch(changeMaxValueAC(newValue))
     },
     setMinMaxCounterValuesFn() {
+      saveStateMinMaxValuesToLocalStorage()
       dispatch(changeMinMaxCounterValuesAC())
     },
     incCounterFn() {

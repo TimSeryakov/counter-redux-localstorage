@@ -3,7 +3,7 @@ import {ACTIONS_TYPE, CounterReducerActionsTypes} from "./actions";
 export enum MESSAGES {
   ENTER_VALUES = `enter values and press 'set'`,
   INCORRECT_VALUE = `incorrect value!`,
-  NONE = ``
+  EMPTY = ``
 }
 
 export type CounterStateType = {
@@ -36,27 +36,17 @@ type ButtonsStateType = {
   resetButton: boolean
 }
 
-// FIXME
-// export type LocalStorageStateType = {
-//   min: number
-//   max: number
-// }
-//
-// const localStorageState: LocalStorageStateType = restoreState<LocalStorageStateType>("counterMinMaxValues", {
-//   min: 0,
-//   max: 5
-// })
 
 const initialState: CounterStateType = {
   messageText: MESSAGES.ENTER_VALUES,
 
-  inputMinValue: 0 /*localStorageState.min*/,
-  inputMaxValue: 5 /*localStorageState.max*/,
+  inputMinValue: 0,
+  inputMaxValue: 5,
 
-  counterCurrentValue: 0 /*localStorageState.min*/,
+  counterCurrentValue: 0,
   counterMinMaxValues: {
-    min: 0 /*localStorageState.min*/,
-    max: 5 /*localStorageState.max*/,
+    min: 0,
+    max: 5,
   },
 
   errorsState: {
@@ -143,7 +133,7 @@ export const counterReducer = (state = initialState, action: CounterReducerActio
     case ACTIONS_TYPE.CHANGE_COUNTER_MIN_MAX_VALUES:
       return {
         ...state,
-        messageText: MESSAGES.NONE,
+        messageText: MESSAGES.EMPTY,
         counterMinMaxValues: {
           min: state.inputMinValue,
           max: state.inputMaxValue
@@ -155,7 +145,7 @@ export const counterReducer = (state = initialState, action: CounterReducerActio
         }
       }
 
-    case ACTIONS_TYPE.INCREASE_COUNTER: // FIXME
+    case ACTIONS_TYPE.INCREASE_COUNTER: // FIXME logic is not correct
       if (state.counterCurrentValue !== state.counterMinMaxValues.max) {
         return {...state, counterCurrentValue: state.counterCurrentValue + 1}
       } else {
@@ -174,7 +164,8 @@ export const counterReducer = (state = initialState, action: CounterReducerActio
       }
 
     case ACTIONS_TYPE.RESET_COUNTER:
-      return {...state,
+      return {
+        ...state,
         counterCurrentValue: state.counterMinMaxValues.min,
         buttonsDisabled: {
           setButton: false,
@@ -185,6 +176,19 @@ export const counterReducer = (state = initialState, action: CounterReducerActio
           ...state.errorsState,
           counterValueError: false,
         },
+      }
+
+    case ACTIONS_TYPE.SET_INIT_MIN_MAX_VALUES:
+      return {
+        ...state,
+        inputMinValue: action.min,
+        inputMaxValue: action.max,
+
+        counterCurrentValue: action.min,
+        counterMinMaxValues: {
+          min: action.min,
+          max: action.max,
+        }
       }
 
     default:

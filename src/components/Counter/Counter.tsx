@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {CounterDisplay} from "../CounterDisplay/CounterDisplay"
 import {OptionsDisplay} from "../OptionsDisplay/OptionsDisplay"
 import {CustomButton} from '../common/CustomButton/CustomButton'
 import './Counter.css'
+import {setInitMinMaxValuesAC} from "../../redux/actions";
+import store from "../../redux/state";
+import {loadStateMinMaxValuesFromLocalStorage} from '../../localStorage/localStorage'
 
 type CounterPropsTypes = {
   messageText: string
@@ -27,6 +30,11 @@ type CounterPropsTypes = {
 }
 
 export const Counter = (props: CounterPropsTypes) => {
+
+  useEffect(() => { // Костыли ¯\_(ツ)_/¯
+    const loadedMinMax = loadStateMinMaxValuesFromLocalStorage()
+    store.dispatch((setInitMinMaxValuesAC(loadedMinMax.min, loadedMinMax.max)))
+  }, [])
 
   const setNewCounterValues = () => props.setMinMaxCounterValuesFn()
   const incCounter = () => props.incCounterFn()
