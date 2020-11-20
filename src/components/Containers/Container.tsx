@@ -12,9 +12,7 @@ import {
 import {IGlobalState} from "../../redux/state";
 import {saveStateMinMaxValuesToLocalStorage} from "../../localStorage/localStorage";
 
-
 const mapStateToProps = (state: IGlobalState) => {
-
   return {
     messageText: state.counter.messageText,
     counterCurrentValue: state.counter.counterCurrentValue,
@@ -31,7 +29,6 @@ const mapStateToProps = (state: IGlobalState) => {
     resetButtonDisabled: state.counter.buttonsDisabled.resetButton,
   }
 }
-
 
 const mapDispatchToProps = (dispatch: Dispatch<CounterReducerActionsTypes>) => {
   return {

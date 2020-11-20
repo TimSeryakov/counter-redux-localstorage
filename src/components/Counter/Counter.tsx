@@ -31,14 +31,10 @@ type CounterPropsTypes = {
 
 export const Counter = (props: CounterPropsTypes) => {
 
-  useEffect(() => { // Костыли ¯\_(ツ)_/¯
+  useEffect(() => { // Не нашел лучшего решения ¯\_(ツ)_/¯
     const loadedMinMax = loadStateMinMaxValuesFromLocalStorage()
     store.dispatch((setInitMinMaxValuesAC(loadedMinMax.min, loadedMinMax.max)))
   }, [])
-
-  const setNewCounterValues = () => props.setMinMaxCounterValuesFn()
-  const incCounter = () => props.incCounterFn()
-  const resetCounter = () => props.resetCounterFn()
 
   return (
       <div className="w-full h-full grid place-content-center">
@@ -57,7 +53,7 @@ export const Counter = (props: CounterPropsTypes) => {
               />
             </div>
             <div className="p-3 border-theme-dark border-4 rounded-lg mt-3 flex justify-center">
-              <CustomButton callbackFn={setNewCounterValues} disabled={props.setButtonDisabled}>set</CustomButton>
+              <CustomButton callbackFn={() => {props.setMinMaxCounterValuesFn()}} disabled={props.setButtonDisabled}>set</CustomButton>
             </div>
           </section>
 
@@ -69,8 +65,8 @@ export const Counter = (props: CounterPropsTypes) => {
               />
             </div>
             <div className="p-3 border-theme-dark border-4 rounded-lg mt-3 flex justify-between">
-              <CustomButton callbackFn={incCounter} disabled={props.incButtonDisabled}>inc</CustomButton>
-              <CustomButton callbackFn={resetCounter} disabled={props.resetButtonDisabled}>reset</CustomButton>
+              <CustomButton callbackFn={() => {props.incCounterFn()}} disabled={props.incButtonDisabled}>inc</CustomButton>
+              <CustomButton callbackFn={() => {props.resetCounterFn()}} disabled={props.resetButtonDisabled}>reset</CustomButton>
             </div>
           </section>
 
