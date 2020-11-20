@@ -145,22 +145,23 @@ export const counterReducer = (state = initialState, action: CounterReducerActio
         }
       }
 
-    case ACTIONS_TYPE.INCREASE_COUNTER: // FIXME logic is not correct
-      if (state.counterCurrentValue !== state.counterMinMaxValues.max) {
-        return {...state, counterCurrentValue: state.counterCurrentValue + 1}
+    case ACTIONS_TYPE.INCREASE_COUNTER:
+      if (state.counterCurrentValue === state.counterMinMaxValues.max - 1) {
+          return {
+            ...state,
+            counterCurrentValue: state.counterCurrentValue + 1,
+            buttonsDisabled: {
+              ...state.buttonsDisabled,
+              incButton: true,
+              resetButton: false
+            },
+            errorsState: {
+              ...state.errorsState,
+              counterValueError: true,
+            }
+          }
       } else {
-        return {
-          ...state,
-          buttonsDisabled: {
-            ...state.buttonsDisabled,
-            incButton: true,
-            resetButton: false
-          },
-          errorsState: {
-            ...state.errorsState,
-            counterValueError: true,
-          },
-        }
+        return {...state, counterCurrentValue: state.counterCurrentValue + 1}
       }
 
     case ACTIONS_TYPE.RESET_COUNTER:
